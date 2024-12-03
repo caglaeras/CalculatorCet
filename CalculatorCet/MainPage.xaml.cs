@@ -15,6 +15,8 @@
         bool isFirstNumberAfterOperator = true;
         Operator PreviousOperator = Operator.None;
 
+        double memoryValue = 0;
+
 
         private void SubtractButton_Clicked(object sender, EventArgs e)
         {
@@ -41,6 +43,13 @@
 
             DoCalculation();
             PreviousOperator = Operator.Add;
+
+        }
+        private void EqualButton_Clicked(object sender, EventArgs e)
+        {
+
+            DoCalculation();
+            PreviousOperator = Operator.None;
 
         }
 
@@ -76,7 +85,7 @@
         private void Digit_Clicked(object sender, EventArgs e)
         {
             Button digitButton = sender as Button;
-            if(isFirstNumberAfterOperator)
+            if (isFirstNumberAfterOperator)
             {
                 Display.Text = digitButton.Text;
                 isFirstNumberAfterOperator = false;
@@ -86,7 +95,81 @@
             {
                 Display.Text += digitButton.Text;
             }
-           
+
+        }
+
+        private void CEButton_Clicked(object sender, EventArgs e)
+        {
+            Display.Text = "0";
+            isFirstNumberAfterOperator = true;
+        }
+
+        private void CButton_Clicked(object sender, EventArgs e)
+        {
+            Display.Text = "0";
+            FirstNumber = 0;
+            PreviousOperator = Operator.None;
+            isFirstNumberAfterOperator = true;
+        }
+
+        private void MplusButton_Clicked(object sender, EventArgs e)
+        {
+            if (double.TryParse(Display.Text, out double currentValue))
+            {
+                memoryValue += currentValue;
+                Display.Text = memoryValue.ToString();
+            }
+        }
+
+        private void MSButton_Clicked(object sender, EventArgs e)
+        {
+            if (double.TryParse(Display.Text, out double currentValue))
+            {
+                memoryValue = currentValue;
+                Display.Text = "Stored";
+            }
+        }
+
+        private void MminusButton_Clicked(object sender, EventArgs e)
+        {
+            if (double.TryParse(Display.Text, out double currentValue))
+            {
+                memoryValue -= currentValue;
+                Display.Text = memoryValue.ToString();
+            }
+        }
+
+        private void comaButton_Clicked(object sender, EventArgs e)
+        {
+            string decimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+            if (!Display.Text.Contains(decimalSeparator))
+            {
+                Display.Text += decimalSeparator;
+            }
+        }
+
+        private void DeleteButton_Clicked(object sender, EventArgs e)
+        {
+            if (Display.Text.Length > 1)
+            {
+                Display.Text = Display.Text.Substring(0, Display.Text.Length - 1);
+            }
+            else
+            {
+                Display.Text = "0";
+            }
+        }
+
+        private void MemoryClearButton_Clicked(object sender, EventArgs e)
+        {
+            memoryValue = 0;
+            Display.Text = "Memory Cleared";
+        }
+
+        private void MemoryRecallButton_Clicked(object sender, EventArgs e)
+        {
+            Display.Text = memoryValue.ToString();
         }
     }
 
