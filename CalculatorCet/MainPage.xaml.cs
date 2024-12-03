@@ -171,6 +171,27 @@
         {
             Display.Text = memoryValue.ToString();
         }
+
+        private void EqualButton_Clicked(object sender, EventArgs e)
+        {
+            DoCalculation();
+            PreviousOperator = Operator.None;
+
+        }
+
+        private void CEButton_Clicked(object sender, EventArgs e)
+        {
+            Display.Text = "0";
+            isFirstNumberAfterOperator = true;
+        }
+
+        private void CButton_Clicked(object sender, EventArgs e)
+        {
+            Display.Text = "0";
+            FirstNumber = 0;
+            PreviousOperator= Operator.None;
+            isFirstNumberAfterOperator = true;
+        }
     }
 
 }
